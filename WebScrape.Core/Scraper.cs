@@ -1,3 +1,5 @@
+using WebScrape.Core.HtmlParsers;
+
 namespace WebScrape.Core
 {
     public class Scraper
@@ -5,14 +7,12 @@ namespace WebScrape.Core
         private readonly ScrapeFormat _parameters;
         private readonly FileService _fileService;
         private readonly HttpService _httpService;
-        private readonly IHtmlParser _htmlParser;
 
-        public Scraper(ScrapeFormat parameters, FileService fileService, HttpService httpService, IHtmlParser htmlParser)
+        public Scraper(ScrapeFormat parameters, FileService fileService, HttpService httpService)
         {
             _parameters = parameters;
             _fileService = fileService;
             _httpService = httpService;
-            _htmlParser = htmlParser;
         }
 
         public Scraped Scrape ()

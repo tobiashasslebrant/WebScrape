@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using CsQuery.Engine;
 using Newtonsoft.Json;
+using WebScrape.Core.HtmlParsers;
 
 namespace WebScrape.Core
 {
@@ -33,7 +35,7 @@ namespace WebScrape.Core
 
         }
 
-        public string Path { get; }
+        public string Path { get; set; }
         public ScrapeItem ItemsIdentifier { get; }
         public IEnumerable<ScrapeItem> ResultItemsIdentifiers { get; }
         public ScrapeItem ItemLinkIdentifier { get; }
@@ -47,10 +49,19 @@ namespace WebScrape.Core
             return new ScrapeItem
             {
                 Identifier = field?.identifier,
-                Parser = new CssParser()
+                Parser = SelectParser((string)field?.parser)
             };
         }
 
-        
+        IHtmlParser SelectParser(string identifier)
+        {
+            switch (identifier)
+            {
+                case "css": return new CssParser();
+                case "rexeg": return new RegexParser();
+                case "xpath": return new XPathParser();
+                default: return new CssParser();
+            }
+        }
     }
 }
