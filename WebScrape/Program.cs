@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Text.RegularExpressions;
-using System.Web;
+using System.IO;
 using WebScrape.Core;
 
 namespace WebScrape
@@ -9,17 +8,12 @@ namespace WebScrape
     {
         static void Main(string[] args)
         {
-            var parameters = new Parameters(args);
-            if (args.Length <= 2)
-            {
-                Console.WriteLine(parameters.Help);
-                return;
-            }
-
-            var scraper = new Scraper(parameters, new FileService(), new HttpService());
-            var scraped = scraper.Scrape();
+            var settingsFile = File.ReadAllText("WebScraper.json");
+            var format = new ScrapeFormat(settingsFile);
+            var scraper = new Scraper(format, new FileService(), new HttpService(), new CssParser());
+            var scrapedData = scraper.Scrape();
             var writer = new Writer(Console.Out);
-            writer.Write(scraped, parameters.FieldDelimiter);
+            writer.Write(scrapedData, format.FieldDelimiter);
         }
     }
 }

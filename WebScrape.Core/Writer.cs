@@ -20,7 +20,7 @@ namespace WebScrape.Core
             foreach (var line in scraped.Items)
             {
                 foreach (var field in line)
-                    _textWriter.Write(Format(field, fieldDelimiter));
+                    _textWriter.Write(Format(field, fieldDelimiter) + fieldDelimiter);
                 _textWriter.WriteLine();
             }
         }

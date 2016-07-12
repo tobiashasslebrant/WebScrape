@@ -5,12 +5,14 @@ namespace WebScrape.Core.Tests.Given_Scraper
     public abstract class Arrange
     {
         protected Scraper Subject;
-        protected abstract string[] Arguments { get; }
+        protected abstract object Settings { get; }
 
         [SetUp]
         protected void BaseSetup()
         {
-            Subject = new Scraper(new Parameters(Arguments), new FileService(), new HttpService());
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(Settings);
+             Subject = new Scraper(new ScrapeFormat(json), new FileService(), new HttpService(), new CssParser());
+
         }
 
     }

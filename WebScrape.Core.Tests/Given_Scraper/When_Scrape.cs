@@ -8,16 +8,45 @@ namespace WebScrape.Core.Tests.Given_Scraper
     {
         Scraped _result;
 
-        protected override string[] Arguments
-            => new[]
+        protected override object Settings
+            => new
             {
-                "http://www.hemnet.se/salda/bostader?&page=1",
-                "#search-results li",
-                "/readfromdisk",
-                ".sold-date",
-                ".price"
+                path = "http://www.hemnet.se/salda/bostader?&page=1",
+                writeToDisk = false,
+                readFromDisk = true,
+                crawling = new
+                {
+                    itemsIdentifier = new
+                    {
+                        parser = "css",
+                        identifier = "#search-results li"
+                    },
+                    followItemLink = false,
+                    itemLinkIdentifier = new
+                    {
+                        parser = "css",
+                        identifier = "li a"
+                    }
+                },
+                outFormat = new
+                {
+                    fieldDelimiter = ";",
+                    resultIdentifiers = new[]
+                    {
+                        new
+                        {
+                            parser = "css",
+                            identifier = ".sold-date"
+                        },
+                        new
+                        {
+                            parser = "css",
+                            identifier = ".price"
+                        }
+                    }
+                },
             };
-
+  
         [SetUp]
         public void Because_of() 
             => _result = Subject.Scrape();
@@ -31,10 +60,6 @@ namespace WebScrape.Core.Tests.Given_Scraper
         {
             using (var textWriter = File.CreateText("c:\\temp\\toby.txt"))
                 new Writer(textWriter).Write(_result,";");
-
-
         }
-        
-
     }
 }

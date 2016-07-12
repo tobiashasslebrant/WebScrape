@@ -19,7 +19,7 @@ namespace WebScrape.Core
         public string ItemLinkCss { get; }
         public string FieldDelimiter { get; } = ";";
         public List<string> DataCsses { get; } = new List<string>();
-        public bool IsHttp => Path?.ToLower().StartsWith("http") ?? false;
+     //   public bool IsHttp => Path?.ToLower().StartsWith("http") ?? false;
         public bool WriteToDisk { get; }
         public bool ReadFromDisk { get; }
 
