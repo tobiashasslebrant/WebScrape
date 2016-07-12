@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScrape", "WebScrape\WebScrape.csproj", "{A323FC33-E9C0-46ED-B4D2-2A69788819D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScrape.Core", "WebScrape.Core\WebScrape.Core.csproj", "{78295459-9AA6-4C8E-8DB6-85815C7CFB41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScrape.Core.Tests", "WebScrape.Core.Tests\WebScrape.Core.Tests.csproj", "{4CC5847B-EA46-4999-91B5-8AEB860BEF15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{A323FC33-E9C0-46ED-B4D2-2A69788819D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A323FC33-E9C0-46ED-B4D2-2A69788819D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A323FC33-E9C0-46ED-B4D2-2A69788819D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78295459-9AA6-4C8E-8DB6-85815C7CFB41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78295459-9AA6-4C8E-8DB6-85815C7CFB41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78295459-9AA6-4C8E-8DB6-85815C7CFB41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78295459-9AA6-4C8E-8DB6-85815C7CFB41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CC5847B-EA46-4999-91B5-8AEB860BEF15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CC5847B-EA46-4999-91B5-8AEB860BEF15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CC5847B-EA46-4999-91B5-8AEB860BEF15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CC5847B-EA46-4999-91B5-8AEB860BEF15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
