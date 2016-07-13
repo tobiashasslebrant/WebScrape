@@ -53,13 +53,13 @@ namespace WebScrape.Core
                     html = _fileService.Read(filePath);
                 else
                 {
-                    html = _httpService.GetStringAsync(_scrapeConfiguration.Path);
+                    html = _httpService.GetStringAsync(path);
                     _fileService.Write(filePath, html);
                 }
             }
             else
             {
-                html = _httpService.GetStringAsync(_scrapeConfiguration.Path);
+                html = _httpService.GetStringAsync(path);
             }
             return html;
         }

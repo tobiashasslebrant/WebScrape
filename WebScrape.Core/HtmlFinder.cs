@@ -3,7 +3,14 @@ using WebScrape.Core.HtmlParsers;
 
 namespace WebScrape.Core
 {
-    public class HtmlFinder
+    public interface IHtmlFinder
+    {
+        string Attr(string attribute, string text);
+        string Element(string text);
+        IEnumerable<string> Elements(string text);
+    }
+
+    public class HtmlFinder : IHtmlFinder
     {
         readonly IHtmlParser _htmlParser;
         readonly string _identifier;

@@ -29,14 +29,14 @@ namespace WebScrape.Core
         }
 
         public string Path { get; set; }
-        public HtmlFinder ItemsIdentifier { get; set; }
-        public IEnumerable<HtmlFinder> ResultItemsIdentifiers { get; set; }
-        public HtmlFinder ItemLinkIdentifier { get; set; }
+        public IHtmlFinder ItemsIdentifier { get; set; }
+        public IEnumerable<IHtmlFinder> ResultItemsIdentifiers { get; set; }
+        public IHtmlFinder ItemLinkIdentifier { get; set; }
         public bool FollowItemLink { get; set; }
         public string FieldDelimiter { get; set; }
         public bool UseCache { get; set; }
 
-        HtmlFinder GetScrapeItem(dynamic field) 
+        IHtmlFinder GetScrapeItem(dynamic field) 
             => new HtmlFinder(SelectParser((string)field?.parser), field?.identifier);
 
         IHtmlParser SelectParser(string identifier)

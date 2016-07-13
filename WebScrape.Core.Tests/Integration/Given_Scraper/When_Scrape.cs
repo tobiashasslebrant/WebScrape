@@ -52,10 +52,12 @@ namespace WebScrape.Core.Tests.Given_Scraper
         public void Because_of() 
             => _result = Subject.Scrape();
 
+        [Ignore("only for integrationtests")]
         [Test]
         public void Should_have_more_than_one_item_with_values()
            => Assert.That(_result.Items.Count(w => w[0] != ""), Is.GreaterThan(1));
 
+        [Ignore("only for integrationtests")]
         [Test]
         public void toby()
         {
