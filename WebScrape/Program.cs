@@ -12,7 +12,7 @@ namespace WebScrape
             var arguments = new Arguments(args);
             if (arguments.ShowHelp)
             {
-                Console.Out.Write(arguments.ShowHelp);
+                Console.Out.Write(arguments.HelpText);
                 return;
             }
 

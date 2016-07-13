@@ -10,7 +10,7 @@ namespace WebScrape
                "\r\n   [/settings filepath]    file path to json settings file. Defaults to Webscrape.json" +
                "\r\n   [/path urlPath]         url path to page being scraped. Overrides path in Webscrape.json" +
                "\r\n" +
-               "\r\n  === Explanation of WebScrape.json ===" +
+               "\r\n === Explanation of WebScrape.json ===" +
                "\r\n   path:                   url path to page being scraped." +
                "\r\n   useCache:               if true serialize all pages being scraped to disk cache." +
                "\r\n                           The cache will be used if scraping is used on same page again." +
@@ -52,7 +52,7 @@ namespace WebScrape
             }
         }
 
-        public string Settings { get; } = "WebScraper.json";
+        public string Settings { get; } = "WebScrape.json";
         public string Path { get; }
         public bool ShowHelp { get; }
 
