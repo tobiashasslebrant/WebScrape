@@ -1,4 +1,4 @@
-namespace WebScrape.Core
+namespace WebScrape.Core.Models
 {
     public enum CacheType { Result, Item}
 }

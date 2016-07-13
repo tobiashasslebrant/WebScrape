@@ -1,12 +1,13 @@
 ﻿using System.IO;
 using System.Linq;
 using NUnit.Framework;
+using WebScrape.Core.Models;
 
 namespace WebScrape.Core.Tests.Given_Scraper
 {
     public class When_Scrape : Arrange
     {
-        Scraped _result;
+        ResultScraped _result;
 
         protected override object Settings
             => new

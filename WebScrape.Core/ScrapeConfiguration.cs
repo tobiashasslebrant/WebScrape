@@ -1,25 +1,17 @@
 using System.Collections.Generic;
-using CsQuery.Engine;
 using Newtonsoft.Json;
 using WebScrape.Core.HtmlParsers;
 
 namespace WebScrape.Core
 {
-    public class ScrapeItem
+    public class ScrapeConfiguration
     {
-        public IHtmlParser Parser;
-        public string Identifier;
-    }
-
-    public class ScrapeFormat
-    {
-        public ScrapeFormat(string json)
+        public void Load(string json)
         {
             var settings = JsonConvert.DeserializeObject<dynamic>(json);
             Path = settings.path;
-            WriteToDisk = settings.writeToDisk;
-            ReadFromDisk = settings.readFromDisk;
-
+            UseCache = settings.useCache;
+        
             //crawling
             ItemsIdentifier = GetScrapeItem(settings.crawling.itemsIdentifier);
             FollowItemLink = settings.crawling.followItemLink;
@@ -27,7 +19,7 @@ namespace WebScrape.Core
 
             //outformat
             FieldDelimiter = settings.outFormat.fieldDelimiter;
-            var list = new List<ScrapeItem>();
+            var list = new List<HtmlFinder>();
             foreach (dynamic field in settings.outFormat.resultIdentifiers)
                 list.Add(GetScrapeItem(field));
 
@@ -36,22 +28,15 @@ namespace WebScrape.Core
         }
 
         public string Path { get; set; }
-        public ScrapeItem ItemsIdentifier { get; }
-        public IEnumerable<ScrapeItem> ResultItemsIdentifiers { get; }
-        public ScrapeItem ItemLinkIdentifier { get; }
-        public bool FollowItemLink { get; }
-        public string FieldDelimiter { get; }
-        public bool WriteToDisk { get; }
-        public bool ReadFromDisk { get; }
+        public HtmlFinder ItemsIdentifier { get; set; }
+        public IEnumerable<HtmlFinder> ResultItemsIdentifiers { get; set; }
+        public HtmlFinder ItemLinkIdentifier { get; set; }
+        public bool FollowItemLink { get; set; }
+        public string FieldDelimiter { get; set; }
+        public bool UseCache { get; set; }
 
-        ScrapeItem GetScrapeItem(dynamic field)
-        {
-            return new ScrapeItem
-            {
-                Identifier = field?.identifier,
-                Parser = SelectParser((string)field?.parser)
-            };
-        }
+        HtmlFinder GetScrapeItem(dynamic field) 
+            => new HtmlFinder(SelectParser((string)field?.parser), field?.identifier);
 
         IHtmlParser SelectParser(string identifier)
         {

@@ -1,8 +1,12 @@
 using System.Net.Http;
 
-namespace WebScrape.Core
+namespace WebScrape.Core.Services
 {
-    public class HttpService
+    public interface IHttpService
+    {
+        string GetStringAsync(string requestUri);
+    }
+    public class HttpService : IHttpService
     {
         readonly HttpClient _client = new HttpClient();
         public string GetStringAsync(string requestUri) 

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WebScrape.Core
+namespace WebScrape.Core.Models
 {
-    public class Scraped
+    public class ResultScraped
     {
         public List<List<string>> Items { get; } = new List<List<string>>();
         public void NewItem() => Items.Add(new List<string>());

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using WebScrape.Core;
-using WebScrape.Core.HtmlParsers;
+using WebScrape.Core.Services;
 
 namespace WebScrape
 {
@@ -9,8 +9,9 @@ namespace WebScrape
     {
         static void Main(string[] args)
         {
-            var settingsFile = File.ReadAllText("WebScraper.json");
-            var format = new ScrapeFormat(settingsFile);
+            var format = new ScrapeConfiguration();
+            format.Load(File.ReadAllText("WebScraper.json"));
+
             if (args.Length == 1)
                 format.Path = args[0];
             var scraper = new Scraper(format, new FileService(), new HttpService());

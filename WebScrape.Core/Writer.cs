@@ -1,7 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
+using WebScrape.Core.Models;
 
 namespace WebScrape.Core
 {
@@ -14,10 +14,10 @@ namespace WebScrape.Core
             _textWriter = textWriter;
         }
 
-        public void Write(Scraped scraped, string fieldDelimiter)
+        public void Write(ResultScraped resultScraped, string fieldDelimiter)
         {
             
-            foreach (var line in scraped.Items)
+            foreach (var line in resultScraped.Items)
             {
                 foreach (var field in line)
                     _textWriter.Write(Format(field, fieldDelimiter) + fieldDelimiter);

@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using WebScrape.Core.Services;
 
 namespace WebScrape.Core.Tests.Given_Scraper
 {
@@ -11,7 +12,7 @@ namespace WebScrape.Core.Tests.Given_Scraper
         protected void BaseSetup()
         {
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(Settings);
-             Subject = new Scraper(new ScrapeFormat(json), new FileService(), new HttpService());
+             Subject = new Scraper(new ScrapeConfiguration(json), new FileService(), new HttpService());
 
         }
 

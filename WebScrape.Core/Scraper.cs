@@ -1,59 +1,67 @@
-using WebScrape.Core.HtmlParsers;
+using WebScrape.Core.Models;
+using WebScrape.Core.Services;
 
 namespace WebScrape.Core
 {
     public class Scraper
     {
-        private readonly ScrapeFormat _parameters;
-        private readonly FileService _fileService;
-        private readonly HttpService _httpService;
+        private readonly ScrapeConfiguration _scrapeConfiguration;
+        private readonly IFileService _fileService;
+        private readonly IHttpService _httpService;
 
-        public Scraper(ScrapeFormat parameters, FileService fileService, HttpService httpService)
+        public Scraper(ScrapeConfiguration scrapeConfiguration, IFileService fileService, IHttpService httpService)
         {
-            _parameters = parameters;
+            _scrapeConfiguration = scrapeConfiguration;
             _fileService = fileService;
             _httpService = httpService;
         }
 
-        public Scraped Scrape ()
+        public ResultScraped Scrape ()
         {
-            var html = _parameters.ReadFromDisk
-                ? _fileService.ReadFromDisk(CacheType.Result, _parameters.Path, 0)
-                : _httpService.GetStringAsync(_parameters.Path);
-                   
-            if (_parameters.WriteToDisk)
-                _fileService.WriteToDisk(CacheType.Result, _parameters.Path, html, 0);
+            var html = GetHtml(CacheType.Result, _scrapeConfiguration.Path, 0);
 
-            var scraped = new Scraped();
-            var htmlItems = _parameters.ItemsIdentifier.Parser.GetElements(_parameters.ItemsIdentifier.Identifier,html);
+            var scraped = new ResultScraped();
+            var htmlItems = _scrapeConfiguration.ItemsIdentifier.Elements(html);
             var index = 0;
             
             foreach (var htmlItem in htmlItems)
             {
                 var item = htmlItem;
-                if (_parameters.FollowItemLink)
+                if (_scrapeConfiguration.FollowItemLink)
                 {
-                    var itemLink =_parameters.ItemLinkIdentifier.Parser.GetAttr(
-                            _parameters.ItemLinkIdentifier.Identifier, "href", html);
+                    var itemLink =_scrapeConfiguration.ItemLinkIdentifier.Attr("href", html);
 
                     if (itemLink == null) continue;
-
-                    item = _parameters.ReadFromDisk 
-                        ? _fileService.ReadFromDisk(CacheType.Item, itemLink, index) 
-                        : _httpService.GetStringAsync(itemLink);
-
-                   if(_parameters.WriteToDisk)
-                        _fileService.WriteToDisk(CacheType.Item,itemLink, item, index);
+                    item = GetHtml(CacheType.Item, itemLink, index);
+                    index++;
                 }
 
                 scraped.NewItem();
-                foreach (var identifier in _parameters.ResultItemsIdentifiers)
-                    scraped.AddValue(identifier.Parser.GetElement(identifier.Identifier,item));
-                 
-                index++;
+                foreach (var identifier in _scrapeConfiguration.ResultItemsIdentifiers)
+                    scraped.AddValue(identifier.Element(item));
             }
             return scraped;
         }
-       
+
+        string GetHtml(CacheType cacheType, string path, int index)
+        {
+            string html;
+            if (_scrapeConfiguration.UseCache)
+            {
+                var filePath = _fileService.UniqueFileName(cacheType, path, index);
+                if (_fileService.Exists(filePath))
+                    html = _fileService.Read(filePath);
+                else
+                {
+                    html = _httpService.GetStringAsync(_scrapeConfiguration.Path);
+                    _fileService.Write(filePath, html);
+                }
+            }
+            else
+            {
+                html = _httpService.GetStringAsync(_scrapeConfiguration.Path);
+            }
+            return html;
+        }
     }
 }
