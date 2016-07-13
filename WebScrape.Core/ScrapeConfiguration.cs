@@ -6,7 +6,8 @@ namespace WebScrape.Core
 {
     public class ScrapeConfiguration
     {
-        public void Load(string json)
+        
+        public void LoadJson(string json)
         {
             var settings = JsonConvert.DeserializeObject<dynamic>(json);
             Path = settings.path;

@@ -12,7 +12,9 @@ namespace WebScrape.Core.Tests.Given_Scraper
         protected void BaseSetup()
         {
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(Settings);
-             Subject = new Scraper(new ScrapeConfiguration(json), new FileService(), new HttpService());
+            var configuration = new ScrapeConfiguration();
+            configuration.LoadJson(json);
+            Subject = new Scraper(configuration, new FileService(), new HttpService());
 
         }
 
