@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HtmlParsers\XPathParser.cs" />
     <Compile Include="Models\CacheType.cs" />
     <Compile Include="Services\FileService.cs" />
     <Compile Include="HtmlFinder.cs" />

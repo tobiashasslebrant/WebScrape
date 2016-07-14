@@ -36,17 +36,25 @@ namespace WebScrape.Core
         public string FieldDelimiter { get; set; }
         public bool UseCache { get; set; }
 
-        IHtmlFinder GetScrapeItem(dynamic field) 
-            => new HtmlFinder(SelectParser((string)field?.parser), field?.identifier);
+        IHtmlFinder GetScrapeItem(dynamic field)
+        {
+            IHtmlParser parser = SelectParser((string) field?.parser);
+            string identifier = field?.identifier;
+            return new HtmlFinder(parser, identifier);
+        }
 
         IHtmlParser SelectParser(string identifier)
         {
             switch (identifier)
             {
-                case "css": return new CssParser();
-                case "rexeg": return new RegexParser();
-                case "xpath": return new XPathParser();
-                default: return new CssParser();
+                case "css":
+                    return new CssParser();
+                case "regex":
+                    return new RegexParser();
+                case "xpath":
+                    return new XPathParser();
+                default:
+                    return new CssParser();
             }
         }
     }

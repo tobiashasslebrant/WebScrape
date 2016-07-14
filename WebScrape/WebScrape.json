@@ -1,29 +1,27 @@
 {
-	path:"http://www.hemnet.se/bostader?item_types%5B%5D=villa&location_ids%5B%5D=17744&page=2&utf8=%E2%9C%93",
-	writeToDisk: false,
-	readFromDisk: false,
-	crawling:{
-		itemsIdentifier:{
-			parser: "css",
-			identifier: "#search-results li"
+	"path":"http://www.hemnet.se/bostader?item_types%5B%5D=villa&location_ids%5B%5D=17744&page=2&utf8=%E2%9C%93",
+	"useCache": true,
+	"crawling": {
+		"itemsIdentifier": {
+			"parser": "css",
+			"identifier": "#search-results li[data-gtm-item-page]"
 		},
-		followItemLink: false,
-		itemLinkIdentifier: {
-			parser: "css",
-			identifier: "li a"
+		"followItemLink": false,
+		"itemLinkIdentifier": {
+			"parser": "css",
+			"identifier": "li a"
 		}
 	},
-	outFormat:{
-		fieldDelimiter: ";",
-		resultIdentifiers:[
+	"outFormat":{
+		"fieldDelimiter": ";",
+		"resultIdentifiers": [
 		{
-			parser: "xpath",
-			identifier: "//h2[1]/text()"
+			"parser": "xpath",
+			"identifier": "//h2[1]/text()"
 		},
 		{
-			parser: "regex",
-			identifier: "[\d|\s]+\skr"
+			"parser": "regex",
+			"identifier": "[\\d|\\s]+\\skr"
 		}]
 	}
-	
 }
