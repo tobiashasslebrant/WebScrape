@@ -29,7 +29,7 @@ namespace WebScrape.Core
                 var item = htmlItem;
                 if (_scrapeConfiguration.FollowItemLink)
                 {
-                    var itemLink =_scrapeConfiguration.ItemLinkIdentifier.Attr("href", html);
+                    var itemLink =_scrapeConfiguration.ItemLinkIdentifier.Attr("href", htmlItem);
 
                     if (itemLink == null) continue;
                     item = GetHtml(CacheType.Item, itemLink, index);

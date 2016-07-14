@@ -7,7 +7,7 @@ namespace WebScrape.Core
     public class ScrapeConfiguration
     {
         
-        public void LoadJson(string json)
+        public void load(string json)
         {
             var settings = JsonConvert.DeserializeObject<dynamic>(json);
             Path = settings.path;
@@ -16,7 +16,7 @@ namespace WebScrape.Core
             //crawling
             ItemsIdentifier = GetScrapeItem(settings.crawling.itemsIdentifier);
             FollowItemLink = settings.crawling.followItemLink;
-            ItemLinkIdentifier = GetScrapeItem(settings.crawling.resultItemLinkIdentifier);
+            ItemLinkIdentifier = GetScrapeItem(settings.crawling.itemLinkIdentifier);
 
             //outformat
             FieldDelimiter = settings.outFormat.fieldDelimiter;

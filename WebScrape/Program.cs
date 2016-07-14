@@ -15,17 +15,18 @@ namespace WebScrape
                 Console.Out.Write(arguments.HelpText);
                 return;
             }
+            
+            var configuration = new ScrapeConfiguration();
+            var configurationJson = File.ReadAllText(arguments.ConfigurationPath ?? "WebScrape.json");
+            configuration.load(configurationJson);
 
-            var format = new ScrapeConfiguration();
-            if (arguments.Path != "")
-                format.Path = arguments.Path;
-
-            format.LoadJson(File.ReadAllText(arguments.Settings));
-
-            var scraper = new Scraper(format, new FileService(), new HttpService());
+            if (arguments.Path != null)
+                configuration.Path = arguments.Path;
+            
+            var scraper = new Scraper(configuration, new FileService(), new HttpService());
             var scrapedData = scraper.Scrape();
             var writer = new Writer(Console.Out);
-            writer.Write(scrapedData, format.FieldDelimiter);
+            writer.Write(scrapedData, configuration.FieldDelimiter);
         }
     }
 }
