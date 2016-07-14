@@ -34,6 +34,7 @@ namespace WebScrape.Core.Services
         {
             if (!File.Exists(filePath))
                 throw new Exception($"could not find a matching file in cache for path {filePath}");
+
             return File.ReadAllText(filePath);
         }
 

@@ -57,7 +57,7 @@
     <Compile Include="HtmlParsers\XPathParser.cs" />
     <Compile Include="Models\CacheType.cs" />
     <Compile Include="Services\FileService.cs" />
-    <Compile Include="HtmlFinder.cs" />
+    <Compile Include="HtmlParsers\HtmlParserDecorator.cs" />
     <Compile Include="HtmlParsers\CssParser.cs" />
     <Compile Include="HtmlParsers\RegexParser.cs" />
     <Compile Include="Services\HttpService.cs" />
@@ -66,6 +66,7 @@
     <Compile Include="Models\ResultScraped.cs" />
     <Compile Include="ScrapeConfiguration.cs" />
     <Compile Include="Scraper.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="Writer.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using FakeItEasy;
 using NUnit.Framework;
+using WebScrape.Core.HtmlParsers;
 using WebScrape.Core.Models;
 
-namespace WebScrape.Core.Tests.Unit.Given_Scraper
+namespace WebScrape.Core.Tests.Given_Scraper
 {
     public class When_Scrape : Arrange
     {
@@ -21,17 +21,17 @@ namespace WebScrape.Core.Tests.Unit.Given_Scraper
             "</li>",
         };
 
-        protected override IEnumerable<IHtmlFinder> _fields 
+        protected override IEnumerable<IHtmlParserDecorator> _fields 
             => new []
             {
-                A.Fake<IHtmlFinder>(),
-                A.Fake<IHtmlFinder>(),
-                A.Fake<IHtmlFinder>()
+                A.Fake<IHtmlParserDecorator>(),
+                A.Fake<IHtmlParserDecorator>(),
+                A.Fake<IHtmlParserDecorator>()
             };
 
         [SetUp]
         public void Because_of() 
-            => _result = Subject.ScrapeAsync().Result;
+            => _result = Subject.ScrapeAsync("http://test").Result;
 
         [Test]
         public void Should_have_two_rows()

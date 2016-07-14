@@ -7,7 +7,7 @@ namespace WebScrape.Core
 {
     public class Writer
     {
-        private readonly TextWriter _textWriter;
+        readonly TextWriter _textWriter;
 
         public Writer(TextWriter textWriter)
         {

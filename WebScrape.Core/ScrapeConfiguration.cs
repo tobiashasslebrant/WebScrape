@@ -6,12 +6,13 @@ namespace WebScrape.Core
 {
     public class ScrapeConfiguration
     {
-        
         public void load(string json)
         {
             var settings = JsonConvert.DeserializeObject<dynamic>(json);
             Path = settings.path;
             UseCache = settings.useCache;
+            UseAsync = settings.useAsync;
+            RequestDelay = settings.requestDelay;
         
             //crawling
             ItemsParser = GetScrapeItem(settings.crawling.itemsParser);
@@ -20,7 +21,7 @@ namespace WebScrape.Core
 
             //outformat
             FieldDelimiter = settings.outFormat.fieldDelimiter;
-            var list = new List<HtmlFinder>();
+            var list = new List<HtmlParserDecorator>();
             foreach (dynamic field in settings.outFormat.fieldParsers)
                 list.Add(GetScrapeItem(field));
 
@@ -28,19 +29,21 @@ namespace WebScrape.Core
 
         }
 
+        public int RequestDelay { get; set; }
+        public bool UseAsync { get; set; }
         public string Path { get; set; }
-        public IHtmlFinder ItemsParser { get; set; }
-        public IHtmlFinder ItemLinkParser { get; set; }
-        public IEnumerable<IHtmlFinder> FieldParsers { get; set; }
+        public IHtmlParserDecorator ItemsParser { get; set; }
+        public IHtmlParserDecorator ItemLinkParser { get; set; }
+        public IEnumerable<IHtmlParserDecorator> FieldParsers { get; set; }
         public bool FollowItemLink { get; set; }
         public string FieldDelimiter { get; set; }
         public bool UseCache { get; set; }
 
-        IHtmlFinder GetScrapeItem(dynamic field)
+        IHtmlParserDecorator GetScrapeItem(dynamic field)
         {
             IHtmlParser parser = SelectParser((string) field?.parser);
             string identifier = field?.identifier;
-            return new HtmlFinder(parser, identifier);
+            return new HtmlParserDecorator(parser, identifier);
         }
 
         IHtmlParser SelectParser(string identifier)

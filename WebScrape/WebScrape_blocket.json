@@ -1,6 +1,8 @@
 {
   "path": "https://www.blocket.se/stockholm?q=honda+shadow+07&cg=0&w=1&st=s&c=&ca=11&is=1&l=0&md=th",
   "useCache": true,
+  "useAsync": true,
+  "requestDelay" : 0, 
   "crawling": {
     "itemsParser": {
       "parser": "css",

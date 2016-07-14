@@ -18,9 +18,9 @@ namespace WebScrape.Core
             _httpService = httpService;
         }
 
-        public async Task<ResultScraped> ScrapeAsync ()
+        public async Task<ResultScraped> ScrapeAsync (string path)
         {
-            var html = await GetHtmlAsync(CacheType.Result, _scrapeConfiguration.Path, 0);
+            var html = await GetHtmlAsync(CacheType.Result, path, 0);
 
             var scraped = new ResultScraped();
             var htmlItems = _scrapeConfiguration.ItemsParser.Elements(html);
@@ -49,6 +49,9 @@ namespace WebScrape.Core
                     scraped.AddValue("ERROR: Could not process item");
                 }
             }
+            
+            //System.Threading.Thread.Sleep(new Random().Next(0, 2)*1000);
+            //Console.WriteLine(path);
             return scraped;
         }
 
@@ -62,15 +65,21 @@ namespace WebScrape.Core
                     html = _fileService.Read(filePath);
                 else
                 {
-                    html = await _httpService.GetStringAsync(path);
+                    html = _scrapeConfiguration.UseAsync
+                        ? await _httpService.GetStringAsync(path)
+                        : _httpService.GetString(path, _scrapeConfiguration.RequestDelay);
+
                     _fileService.Write(filePath, html);
                 }
             }
             else
             {
-                html = await _httpService.GetStringAsync(path);
+                html = _scrapeConfiguration.UseAsync
+                    ? await _httpService.GetStringAsync(path)
+                    : _httpService.GetString(path, _scrapeConfiguration.RequestDelay);
             }
             return html;
         }
+
     }
 }
