@@ -17,7 +17,7 @@ namespace WebScrape.Core.Tests.Unit.Given_Scraper
 
         [SetUp]
         public void Because_of() 
-            => Subject.Scrape();
+            => Subject.ScrapeAsync();
 
         [Test]
         public void Should_get_item_from_link_two_times_because_of_two_items()

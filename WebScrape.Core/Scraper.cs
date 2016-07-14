@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using WebScrape.Core.Models;
 using WebScrape.Core.Services;
 
@@ -17,9 +18,9 @@ namespace WebScrape.Core
             _httpService = httpService;
         }
 
-        public ResultScraped Scrape ()
+        public async Task<ResultScraped> ScrapeAsync ()
         {
-            var html = GetHtml(CacheType.Result, _scrapeConfiguration.Path, 0);
+            var html = await GetHtmlAsync(CacheType.Result, _scrapeConfiguration.Path, 0);
 
             var scraped = new ResultScraped();
             var htmlItems = _scrapeConfiguration.ItemsParser.Elements(html);
@@ -36,7 +37,7 @@ namespace WebScrape.Core
                         var itemLink = _scrapeConfiguration.ItemLinkParser.Attr("href", htmlItem);
 
                         if (itemLink == null) continue;
-                        item = GetHtml(CacheType.Item, itemLink, index);
+                        item = await GetHtmlAsync(CacheType.Item, itemLink, index);
                         index++;
                     }
 
@@ -51,7 +52,7 @@ namespace WebScrape.Core
             return scraped;
         }
 
-        string GetHtml(CacheType cacheType, string path, int index)
+        async Task<string> GetHtmlAsync(CacheType cacheType, string path, int index)
         {
             string html;
             if (_scrapeConfiguration.UseCache)
@@ -61,13 +62,13 @@ namespace WebScrape.Core
                     html = _fileService.Read(filePath);
                 else
                 {
-                    html = _httpService.GetStringAsync(path);
+                    html = await _httpService.GetStringAsync(path);
                     _fileService.Write(filePath, html);
                 }
             }
             else
             {
-                html = _httpService.GetStringAsync(path);
+                html = await _httpService.GetStringAsync(path);
             }
             return html;
         }

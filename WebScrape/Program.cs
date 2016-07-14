@@ -24,7 +24,7 @@ namespace WebScrape
                 configuration.Path = arguments.Path;
             
             var scraper = new Scraper(configuration, new FileService(), new HttpService());
-            var scrapedData = scraper.Scrape();
+            var scrapedData = scraper.ScrapeAsync().Result;
             var writer = new Writer(Console.Out);
             writer.Write(scrapedData, configuration.FieldDelimiter);
         }

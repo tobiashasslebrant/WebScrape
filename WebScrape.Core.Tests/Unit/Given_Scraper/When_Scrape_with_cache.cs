@@ -13,7 +13,9 @@ namespace WebScrape.Core.Tests.Unit.Given_Scraper
 
         [SetUp]
         public void Because_of()
-            => Subject.Scrape();
+        {
+           var result = Subject.ScrapeAsync().Result;
+        }
 
         [Test]
         public void Should_try_to_serialize_cache()

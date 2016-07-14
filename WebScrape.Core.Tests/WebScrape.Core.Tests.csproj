@@ -56,8 +56,6 @@
     <Compile Include="Unit\Given_Scraper\When_Scrape_and_follow_itemLink.cs" />
     <Compile Include="Unit\Given_Scraper\When_Scrape_with_cache.cs" />
     <Compile Include="Unit\Given_Scraper\When_Scrape.cs" />
-    <Compile Include="Integration\Given_Scraper\Arrange.cs" />
-    <Compile Include="Integration\Given_Scraper\When_Scrape.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\Given_Scraper\When_Scrape_with_cache_when_cache_already_exists.cs" />
   </ItemGroup>

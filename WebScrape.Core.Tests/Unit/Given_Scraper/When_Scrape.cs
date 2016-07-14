@@ -31,7 +31,7 @@ namespace WebScrape.Core.Tests.Unit.Given_Scraper
 
         [SetUp]
         public void Because_of() 
-            => _result = Subject.Scrape();
+            => _result = Subject.ScrapeAsync().Result;
 
         [Test]
         public void Should_have_two_rows()

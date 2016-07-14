@@ -14,7 +14,7 @@ namespace WebScrape.Core.Tests.Unit.Given_Scraper
         public void Because_of()
         {
             A.CallTo(() => _fileService.Exists(A<string>._)).Returns(true);
-            Subject.Scrape();
+            Subject.ScrapeAsync();
         }
           
 
