@@ -14,24 +14,24 @@ namespace WebScrape.Core
             UseCache = settings.useCache;
         
             //crawling
-            ItemsIdentifier = GetScrapeItem(settings.crawling.itemsIdentifier);
+            ItemsParser = GetScrapeItem(settings.crawling.itemsParser);
             FollowItemLink = settings.crawling.followItemLink;
-            ItemLinkIdentifier = GetScrapeItem(settings.crawling.itemLinkIdentifier);
+            ItemLinkParser = GetScrapeItem(settings.crawling.itemLinkParser);
 
             //outformat
             FieldDelimiter = settings.outFormat.fieldDelimiter;
             var list = new List<HtmlFinder>();
-            foreach (dynamic field in settings.outFormat.resultIdentifiers)
+            foreach (dynamic field in settings.outFormat.fieldParsers)
                 list.Add(GetScrapeItem(field));
 
-            ResultItemsIdentifiers = list;
+            FieldParsers = list;
 
         }
 
         public string Path { get; set; }
-        public IHtmlFinder ItemsIdentifier { get; set; }
-        public IEnumerable<IHtmlFinder> ResultItemsIdentifiers { get; set; }
-        public IHtmlFinder ItemLinkIdentifier { get; set; }
+        public IHtmlFinder ItemsParser { get; set; }
+        public IHtmlFinder ItemLinkParser { get; set; }
+        public IEnumerable<IHtmlFinder> FieldParsers { get; set; }
         public bool FollowItemLink { get; set; }
         public string FieldDelimiter { get; set; }
         public bool UseCache { get; set; }

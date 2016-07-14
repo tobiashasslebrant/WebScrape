@@ -31,11 +31,11 @@ namespace WebScrape.Core.Tests.Unit.Given_Scraper
             _configuration = new ScrapeConfiguration
             {
                 Path = "http://test",
-                ItemsIdentifier = itemsFinder,
+                ItemsParser = itemsFinder,
                 UseCache = _useCache,
                 FollowItemLink = _followItemLink,
-                ItemLinkIdentifier = itemLinkFinder,
-                ResultItemsIdentifiers = _fields
+                ItemLinkParser = itemLinkFinder,
+                FieldParsers = _fields
             };
 
             _fileService = A.Fake<IFileService>();
