@@ -20,8 +20,7 @@ namespace WebScrape.Core.Tests.Give_Utility
         [Test]
         public void Should_get_five_paths_if_1_2_10()
             => Assert.That(Utility.EnumeratePath("http://test?page={1.2.10}").Count(), Is.EqualTo(5));
-
-
+        
         [Test]
         public void Should_get_three_paths_if_3__5()
             => Assert.That(Utility.EnumeratePath("http://test?page={3..5}").Count(), Is.EqualTo(3));

@@ -9,21 +9,22 @@ namespace WebScrape.Core.Services
 {
     public interface IFileService
     {
-        bool Exists(string fileName);
-       // string Read(string filePath);
-        string UniqueFileName(CacheType cacheType, string path, int index);
-       // void Write(string filePath, string html);
-        Task WriteAsync(string filePath, string text);
+        string UniqueFileName(CacheType cacheType, string path);
+        Task<bool> ExistsAsync(string fileName);
         Task<string> ReadAsync(string filePath);
+        Task WriteAsync(string filePath, string text);
     }
 
     public class FileService : IFileService
     {
-        public bool Exists(string fileName)
-            => File.Exists(fileName);
+        public async Task<bool> ExistsAsync(string fileName)
+        {
+            var exists = await Task.Run(() => File.Exists(fileName));
+            return exists;
+        }
 
-        public string UniqueFileName(CacheType cacheType, string path, int index)
-            => $"cache\\{cacheType}_{Hash(path)}_{index}.html";
+        public string UniqueFileName(CacheType cacheType, string path)
+            => $"cache\\{cacheType}_{Hash(path)}.html";
 
         public void Write(string filePath, string html)
         {
@@ -43,7 +44,7 @@ namespace WebScrape.Core.Services
 
         public async Task<string> ReadAsync(string filePath)
         {
-            var exists = await Task.Run(() => File.Exists(filePath));
+            var exists = await ExistsAsync(filePath);
             if(!exists)
                 return $"ERROR: Could not find a matching file in cache for path {filePath}";
 
