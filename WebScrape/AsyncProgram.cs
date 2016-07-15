@@ -23,7 +23,11 @@ namespace WebScrape
                 Console.Out.Write(arguments.ExampleText);
                 return;
             }
-
+            if (arguments.ShowHelpConfiguration)
+            {
+                Console.Out.Write(arguments.HelpConfigurationText);
+                return;
+            }
 
             try
             {
@@ -31,11 +35,10 @@ namespace WebScrape
                 var configurationJson = File.ReadAllText(arguments.ConfigurationPath ?? "WebScrape.json");
                 configuration.load(configurationJson);
 
-                var rawPath = arguments.Path ?? configuration.Path;
                 var scraper = new Scraper(configuration, new FileService(), new HttpService());
-
                 var scraped = new List<ResultScraped>();
-                    
+
+                var rawPath = arguments.Path ?? configuration.Path;
                 foreach (var path in Utility.EnumeratePath(rawPath))
                 {
                     if (configuration.UseAsync)
