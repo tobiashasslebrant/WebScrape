@@ -43,7 +43,7 @@ namespace WebScrape.Core.Tests.Given_Scraper
 
         [Test]
         public void Should_not_try_to_serialize_cache()
-            => A.CallTo(() => _fileService.Write(A<string>._, A<string>._))
+            => A.CallTo(() => _fileService.WriteAsync(A<string>._, A<string>._))
                 .MustNotHaveHappened();
 
         [Test]

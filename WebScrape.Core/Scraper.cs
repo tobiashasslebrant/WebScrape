@@ -37,6 +37,7 @@ namespace WebScrape.Core
                         var itemLink = _scrapeConfiguration.ItemLinkParser.Attr("href", htmlItem);
 
                         if (itemLink == null) continue;
+
                         item = await GetHtmlAsync(CacheType.Item, itemLink, index);
                         index++;
                     }
@@ -49,9 +50,6 @@ namespace WebScrape.Core
                     scraped.AddValue("ERROR: Could not process item");
                 }
             }
-            
-            //System.Threading.Thread.Sleep(new Random().Next(0, 2)*1000);
-            //Console.WriteLine(path);
             return scraped;
         }
 
@@ -62,14 +60,14 @@ namespace WebScrape.Core
             {
                 var filePath = _fileService.UniqueFileName(cacheType, path, index);
                 if (_fileService.Exists(filePath))
-                    html = _fileService.Read(filePath);
+                    html = await _fileService.ReadAsync(filePath);
                 else
                 {
                     html = _scrapeConfiguration.UseAsync
                         ? await _httpService.GetStringAsync(path)
                         : _httpService.GetString(path, _scrapeConfiguration.RequestDelay);
 
-                    _fileService.Write(filePath, html);
+                    await _fileService.WriteAsync(filePath, html);
                 }
             }
             else
