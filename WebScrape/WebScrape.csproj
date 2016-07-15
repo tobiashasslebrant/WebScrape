@@ -99,9 +99,9 @@
     <None Include="WebScrape_blocket.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="WebScrape_hemnet.json">
+    <EmbeddedResource Include="WebScrape_hemnet.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebScrape.Core\WebScrape.Core.csproj">
