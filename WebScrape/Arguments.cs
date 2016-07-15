@@ -5,18 +5,19 @@ namespace WebScrape
 {
     public class Arguments
     {
-        public string HelpText 
+        public string HelpText
             => "\r\n" +
                "\r\n" +
                "\r\n WEBSCRAPE [/help] [/settings filepath] [/path filepath]" +
                "\r\n   [/help]                              Show this help" +
                "\r\n   [/configurationPath filepath]        File path to json configuration file. Defaults to Webscrape.json" +
+               "\r\n   [/example]                           Show example of json configuration file" +
                "\r\n   [/path urlPath]                      Overrides path in Webscrape.json" +
                "\r\n" +
                "\r\n ================== Explanation of WebScrape.json ==================" +
-               "\r\n" + 
+               "\r\n" +
                "\r\n   path                                 Url path to page being scraped." +
-               "\r\n                                         Can enumerate number of calls by using {from.step.to} syntax" +
+               "\r\n                                         Can enumerate number of calls by using {from.[step].to} syntax" +
                "\r\n                                         for example: http://test/?page={1.2.5} will make calls to " +
                "\r\n                                         http://test/?page=1" +
                "\r\n                                         http://test/?page=3,  " +
@@ -40,10 +41,13 @@ namespace WebScrape
                "\r\n   css                                  Use css syntax in identifier field" +
                "\r\n   xpath                                Use xpath syntax in identifier field" +
                "\r\n   regex                                Use regex syntax in identifier field" +
-               "\r\n" +
+               "\r\n";
+
+        public string ExampleText
+            => "\r\n" +
                "\r\n ================== Example of WebScrape.json =========================" +
                "\r\n" +
-               "\r\n" + ExampleFile() + 
+               "\r\n" + ExampleFile() +
                "\r\n";
 
         public Arguments(string[] args)
@@ -54,6 +58,8 @@ namespace WebScrape
                     ConfigurationPath = args[++index];
                 if (args[index] == "/path")
                     Path = args[++index];
+                if (args[index] == "/example")
+                    ShowExample = true;
                 if (args[index] == "/help")
                     ShowHelp = true;
                 if (args[index] == "/?")
@@ -68,6 +74,7 @@ namespace WebScrape
         public string ConfigurationPath { get; }
         public string Path { get; }
         public bool ShowHelp { get; }
+        public bool ShowExample { get; }
 
         static string ExampleFile()
         {

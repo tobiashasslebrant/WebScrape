@@ -18,6 +18,12 @@ namespace WebScrape
                 Console.Out.Write(arguments.HelpText);
                 return;
             }
+            if (arguments.ShowExample)
+            {
+                Console.Out.Write(arguments.ExampleText);
+                return;
+            }
+
 
             try
             {
